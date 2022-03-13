@@ -6,6 +6,7 @@ import { statelessSessions } from "@keystone-6/core/session";
 import { createAuth } from "@keystone-6/auth";
 import { lists } from "./schemas";
 import { PORT, DATABASE_URL, SESSION_MAX_AGE, SESSION_SECRET } from "./config";
+import { BaseKeystoneTypeInfo, DatabaseConfig } from "@keystone-6/core/types";
 
 // createAuth configures signin functionality based on the config below. Note this only implements
 // authentication, i.e signing in as an item using identity and secret fields in a list. Session
@@ -34,15 +35,23 @@ const session = statelessSessions({
   secret: SESSION_SECRET,
 });
 
+const db: DatabaseConfig<BaseKeystoneTypeInfo> =
+  process.env.DEBUG === "true"
+    ? {
+        provider: "sqlite",
+        url: "file:./keystone.db",
+      }
+    : {
+        provider: "postgresql",
+        useMigrations: true,
+        url: DATABASE_URL,
+      };
+
 // We wrap our config using the withAuth function. This will inject all
 // the extra config required to add support for authentication in our system.
 export default withAuth(
   config({
-    db: {
-      provider: "postgresql",
-      useMigrations: true,
-      url: DATABASE_URL,
-    },
+    db,
     server: { port: PORT },
     lists,
     // We add our session configuration to the system here.
