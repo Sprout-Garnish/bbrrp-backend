@@ -56,5 +56,9 @@ export default withAuth(
     lists,
     // We add our session configuration to the system here.
     session,
+    graphql: {
+      debug: true,
+      playground: true,
+    },
   })
 );
