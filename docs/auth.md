@@ -1,3 +1,6 @@
+# Auth
+
+```ts
 /*
 Welcome to the auth file! Here we have put a config to do basic auth in Keystone.
 
@@ -52,3 +55,5 @@ const session = statelessSessions({
 });
 
 export { withAuth, session };
+
+```
