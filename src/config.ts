@@ -12,6 +12,11 @@ export const DATABASE_URL =
   process.env.DATABASE_URL ||
   `postgres://${process.env.USER}@localhost/keystone-6-example`;
 
+// This is not equivalent to `process.env.NODE_ENV === 'development'`.
+// Rather, it indicates whether the app is running in development mode,
+// even though it is programmatically production mode on server.
+export const DEBUG = process.env.DEBUG === "true" || false;
+
 // Default to 30 days
 export const SESSION_MAX_AGE =
   //@ts-ignore

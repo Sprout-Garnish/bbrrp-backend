@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "keystone dev",
+    "dev": "export NODE_ENV=development && export DEBUG=true && keystone dev",
     "start": "keystone start",
     "build": "keystone build && keystone prisma migrate deploy",
+    "prisma": "keystone prisma",
     "postinstall": "keystone postinstall"
   },
   "dependencies": {
