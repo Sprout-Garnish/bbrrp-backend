@@ -1,7 +1,18 @@
-node_modules
+# Keystone
 .keystone/admin
 keystone.db
-*.log
 .next
+
+# Node modules
+node_modules
+
+# Log
+*.log
+
+# Lock files
 *.lock
 yarn.lock
+package-lock.json
+
+# Public
+public

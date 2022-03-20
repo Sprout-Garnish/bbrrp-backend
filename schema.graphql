@@ -4,12 +4,49 @@
 type User {
   id: ID!
   name: String
+  nickname: String
+  isAdmin: Boolean
+  phone: String
   email: String
   password: PasswordState
+  role: UserRoleType
+  restaurants(
+    where: RestaurantWhereInput! = {}
+    orderBy: [RestaurantOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Restaurant!]
+  restaurantsCount(where: RestaurantWhereInput! = {}): Int
+  reservations(
+    where: ReservationWhereInput! = {}
+    orderBy: [ReservationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Reservation!]
+  reservationsCount(where: ReservationWhereInput! = {}): Int
+  bookmarks(
+    where: RestaurantWhereInput! = {}
+    orderBy: [RestaurantOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Restaurant!]
+  bookmarksCount(where: RestaurantWhereInput! = {}): Int
+  reviews(
+    where: ReviewWhereInput! = {}
+    orderBy: [ReviewOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Review!]
+  reviewsCount(where: ReviewWhereInput! = {}): Int
 }
 
 type PasswordState {
   isSet: Boolean!
+}
+
+enum UserRoleType {
+  Customer
+  Owner
 }
 
 input UserWhereUniqueInput {
@@ -23,7 +60,15 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   id: IDFilter
   name: StringFilter
+  nickname: StringFilter
+  isAdmin: BooleanFilter
+  phone: StringFilter
   email: StringFilter
+  role: UserRoleTypeNullableFilter
+  restaurants: RestaurantManyRelationFilter
+  reservations: ReservationManyRelationFilter
+  bookmarks: RestaurantManyRelationFilter
+  reviews: ReviewManyRelationFilter
 }
 
 input IDFilter {
@@ -48,13 +93,7 @@ input StringFilter {
   contains: String
   startsWith: String
   endsWith: String
-  mode: QueryMode
   not: NestedStringFilter
-}
-
-enum QueryMode {
-  default
-  insensitive
 }
 
 input NestedStringFilter {
@@ -71,10 +110,44 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input UserRoleTypeNullableFilter {
+  equals: UserRoleType
+  in: [UserRoleType!]
+  notIn: [UserRoleType!]
+  not: UserRoleTypeNullableFilter
+}
+
+input RestaurantManyRelationFilter {
+  every: RestaurantWhereInput
+  some: RestaurantWhereInput
+  none: RestaurantWhereInput
+}
+
+input ReservationManyRelationFilter {
+  every: ReservationWhereInput
+  some: ReservationWhereInput
+  none: ReservationWhereInput
+}
+
+input ReviewManyRelationFilter {
+  every: ReviewWhereInput
+  some: ReviewWhereInput
+  none: ReviewWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  nickname: OrderDirection
+  isAdmin: OrderDirection
+  phone: OrderDirection
   email: OrderDirection
+  role: OrderDirection
 }
 
 enum OrderDirection {
@@ -84,8 +157,37 @@ enum OrderDirection {
 
 input UserUpdateInput {
   name: String
+  nickname: String
+  isAdmin: Boolean
+  phone: String
   email: String
   password: String
+  role: UserRoleType
+  restaurants: RestaurantRelateToManyForUpdateInput
+  reservations: ReservationRelateToManyForUpdateInput
+  bookmarks: RestaurantRelateToManyForUpdateInput
+  reviews: ReviewRelateToManyForUpdateInput
+}
+
+input RestaurantRelateToManyForUpdateInput {
+  disconnect: [RestaurantWhereUniqueInput!]
+  set: [RestaurantWhereUniqueInput!]
+  create: [RestaurantCreateInput!]
+  connect: [RestaurantWhereUniqueInput!]
+}
+
+input ReservationRelateToManyForUpdateInput {
+  disconnect: [ReservationWhereUniqueInput!]
+  set: [ReservationWhereUniqueInput!]
+  create: [ReservationCreateInput!]
+  connect: [ReservationWhereUniqueInput!]
+}
+
+input ReviewRelateToManyForUpdateInput {
+  disconnect: [ReviewWhereUniqueInput!]
+  set: [ReviewWhereUniqueInput!]
+  create: [ReviewCreateInput!]
+  connect: [ReviewWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -95,8 +197,435 @@ input UserUpdateArgs {
 
 input UserCreateInput {
   name: String
+  nickname: String
+  isAdmin: Boolean
+  phone: String
   email: String
   password: String
+  role: UserRoleType
+  restaurants: RestaurantRelateToManyForCreateInput
+  reservations: ReservationRelateToManyForCreateInput
+  bookmarks: RestaurantRelateToManyForCreateInput
+  reviews: ReviewRelateToManyForCreateInput
+}
+
+input RestaurantRelateToManyForCreateInput {
+  create: [RestaurantCreateInput!]
+  connect: [RestaurantWhereUniqueInput!]
+}
+
+input ReservationRelateToManyForCreateInput {
+  create: [ReservationCreateInput!]
+  connect: [ReservationWhereUniqueInput!]
+}
+
+input ReviewRelateToManyForCreateInput {
+  create: [ReviewCreateInput!]
+  connect: [ReviewWhereUniqueInput!]
+}
+
+type Restaurant {
+  id: ID!
+  name: String
+  description: String
+  locationRaw: String
+  location: location
+  category: String
+  owner: User
+  reservationPrice: Float
+  info: String
+  images(
+    where: ImageWhereInput! = {}
+    orderBy: [ImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Image!]
+  imagesCount(where: ImageWhereInput! = {}): Int
+  reviews(
+    where: ReviewWhereInput! = {}
+    orderBy: [ReviewOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Review!]
+  reviewsCount(where: ReviewWhereInput! = {}): Int
+}
+
+type location {
+  lat: Float
+  lng: Float
+}
+
+input RestaurantWhereUniqueInput {
+  id: ID
+}
+
+input RestaurantWhereInput {
+  AND: [RestaurantWhereInput!]
+  OR: [RestaurantWhereInput!]
+  NOT: [RestaurantWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+  locationRaw: StringFilter
+  category: StringFilter
+  owner: UserWhereInput
+  reservationPrice: FloatFilter
+  info: StringFilter
+  images: ImageManyRelationFilter
+  reviews: ReviewManyRelationFilter
+}
+
+input FloatFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: FloatFilter
+}
+
+input ImageManyRelationFilter {
+  every: ImageWhereInput
+  some: ImageWhereInput
+  none: ImageWhereInput
+}
+
+input RestaurantOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  locationRaw: OrderDirection
+  category: OrderDirection
+  reservationPrice: OrderDirection
+  info: OrderDirection
+}
+
+input RestaurantUpdateInput {
+  name: String
+  description: String
+  locationRaw: String
+  category: String
+  owner: UserRelateToOneForUpdateInput
+  reservationPrice: Float
+  info: String
+  images: ImageRelateToManyForUpdateInput
+  reviews: ReviewRelateToManyForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ImageRelateToManyForUpdateInput {
+  disconnect: [ImageWhereUniqueInput!]
+  set: [ImageWhereUniqueInput!]
+  create: [ImageCreateInput!]
+  connect: [ImageWhereUniqueInput!]
+}
+
+input RestaurantUpdateArgs {
+  where: RestaurantWhereUniqueInput!
+  data: RestaurantUpdateInput!
+}
+
+input RestaurantCreateInput {
+  name: String
+  description: String
+  locationRaw: String
+  category: String
+  owner: UserRelateToOneForCreateInput
+  reservationPrice: Float
+  info: String
+  images: ImageRelateToManyForCreateInput
+  reviews: ReviewRelateToManyForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input ImageRelateToManyForCreateInput {
+  create: [ImageCreateInput!]
+  connect: [ImageWhereUniqueInput!]
+}
+
+type Image {
+  id: ID!
+  name: String
+  description: String
+  image: ImageFieldOutput
+}
+
+interface ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  url: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
+}
+
+input ImageWhereUniqueInput {
+  id: ID
+}
+
+type LocalImageFieldOutput implements ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  url: String!
+}
+
+type CloudImageFieldOutput implements ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  url: String!
+}
+
+input ImageWhereInput {
+  AND: [ImageWhereInput!]
+  OR: [ImageWhereInput!]
+  NOT: [ImageWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+}
+
+input ImageOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+}
+
+input ImageUpdateInput {
+  name: String
+  description: String
+  image: ImageFieldInput
+}
+
+input ImageFieldInput {
+  upload: Upload
+  ref: String
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input ImageUpdateArgs {
+  where: ImageWhereUniqueInput!
+  data: ImageUpdateInput!
+}
+
+input ImageCreateInput {
+  name: String
+  description: String
+  image: ImageFieldInput
+}
+
+type Reservation {
+  id: ID!
+  time: DateTime
+  reservationFee: Int
+  refund: Int
+  user: User
+  restaurant: Restaurant
+}
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+input ReservationWhereUniqueInput {
+  id: ID
+}
+
+input ReservationWhereInput {
+  AND: [ReservationWhereInput!]
+  OR: [ReservationWhereInput!]
+  NOT: [ReservationWhereInput!]
+  id: IDFilter
+  time: DateTimeFilter
+  reservationFee: IntFilter
+  refund: IntNullableFilter
+  user: UserWhereInput
+  restaurant: RestaurantWhereInput
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input ReservationOrderByInput {
+  id: OrderDirection
+  time: OrderDirection
+  reservationFee: OrderDirection
+  refund: OrderDirection
+}
+
+input ReservationUpdateInput {
+  time: DateTime
+  reservationFee: Int
+  refund: Int
+  user: UserRelateToOneForUpdateInput
+  restaurant: RestaurantRelateToOneForUpdateInput
+}
+
+input RestaurantRelateToOneForUpdateInput {
+  create: RestaurantCreateInput
+  connect: RestaurantWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ReservationUpdateArgs {
+  where: ReservationWhereUniqueInput!
+  data: ReservationUpdateInput!
+}
+
+input ReservationCreateInput {
+  time: DateTime
+  reservationFee: Int
+  refund: Int
+  user: UserRelateToOneForCreateInput
+  restaurant: RestaurantRelateToOneForCreateInput
+}
+
+input RestaurantRelateToOneForCreateInput {
+  create: RestaurantCreateInput
+  connect: RestaurantWhereUniqueInput
+}
+
+type Review {
+  id: ID!
+  user: User
+  images(
+    where: ImageWhereInput! = {}
+    orderBy: [ImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Image!]
+  imagesCount(where: ImageWhereInput! = {}): Int
+  timestamp: DateTime
+  edited: Boolean
+  title: String
+  content: String
+  likes: Int
+  restaurant: Restaurant
+}
+
+input ReviewWhereUniqueInput {
+  id: ID
+}
+
+input ReviewWhereInput {
+  AND: [ReviewWhereInput!]
+  OR: [ReviewWhereInput!]
+  NOT: [ReviewWhereInput!]
+  id: IDFilter
+  user: UserWhereInput
+  images: ImageManyRelationFilter
+  timestamp: DateTimeNullableFilter
+  edited: BooleanFilter
+  title: StringFilter
+  content: StringFilter
+  likes: IntNullableFilter
+  restaurant: RestaurantWhereInput
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
+input ReviewOrderByInput {
+  id: OrderDirection
+  timestamp: OrderDirection
+  edited: OrderDirection
+  title: OrderDirection
+  content: OrderDirection
+  likes: OrderDirection
+}
+
+input ReviewUpdateInput {
+  user: UserRelateToOneForUpdateInput
+  images: ImageRelateToManyForUpdateInput
+  timestamp: DateTime
+  edited: Boolean
+  title: String
+  content: String
+  likes: Int
+  restaurant: RestaurantRelateToOneForUpdateInput
+}
+
+input ReviewUpdateArgs {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateInput!
+}
+
+input ReviewCreateInput {
+  user: UserRelateToOneForCreateInput
+  images: ImageRelateToManyForCreateInput
+  timestamp: DateTime
+  edited: Boolean
+  title: String
+  content: String
+  likes: Int
+  restaurant: RestaurantRelateToOneForCreateInput
 }
 
 """
@@ -114,6 +643,36 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createRestaurant(data: RestaurantCreateInput!): Restaurant
+  createRestaurants(data: [RestaurantCreateInput!]!): [Restaurant]
+  updateRestaurant(
+    where: RestaurantWhereUniqueInput!
+    data: RestaurantUpdateInput!
+  ): Restaurant
+  updateRestaurants(data: [RestaurantUpdateArgs!]!): [Restaurant]
+  deleteRestaurant(where: RestaurantWhereUniqueInput!): Restaurant
+  deleteRestaurants(where: [RestaurantWhereUniqueInput!]!): [Restaurant]
+  createImage(data: ImageCreateInput!): Image
+  createImages(data: [ImageCreateInput!]!): [Image]
+  updateImage(where: ImageWhereUniqueInput!, data: ImageUpdateInput!): Image
+  updateImages(data: [ImageUpdateArgs!]!): [Image]
+  deleteImage(where: ImageWhereUniqueInput!): Image
+  deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
+  createReservation(data: ReservationCreateInput!): Reservation
+  createReservations(data: [ReservationCreateInput!]!): [Reservation]
+  updateReservation(
+    where: ReservationWhereUniqueInput!
+    data: ReservationUpdateInput!
+  ): Reservation
+  updateReservations(data: [ReservationUpdateArgs!]!): [Reservation]
+  deleteReservation(where: ReservationWhereUniqueInput!): Reservation
+  deleteReservations(where: [ReservationWhereUniqueInput!]!): [Reservation]
+  createReview(data: ReviewCreateInput!): Review
+  createReviews(data: [ReviewCreateInput!]!): [Review]
+  updateReview(where: ReviewWhereUniqueInput!, data: ReviewUpdateInput!): Review
+  updateReviews(data: [ReviewUpdateArgs!]!): [Review]
+  deleteReview(where: ReviewWhereUniqueInput!): Review
+  deleteReviews(where: [ReviewWhereUniqueInput!]!): [Review]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -139,6 +698,7 @@ type UserAuthenticationWithPasswordFailure {
 
 input CreateInitialUserInput {
   name: String
+  phone: String
   email: String
   password: String
 }
@@ -152,6 +712,38 @@ type Query {
   ): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  restaurants(
+    where: RestaurantWhereInput! = {}
+    orderBy: [RestaurantOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Restaurant!]
+  restaurant(where: RestaurantWhereUniqueInput!): Restaurant
+  restaurantsCount(where: RestaurantWhereInput! = {}): Int
+  images(
+    where: ImageWhereInput! = {}
+    orderBy: [ImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Image!]
+  image(where: ImageWhereUniqueInput!): Image
+  imagesCount(where: ImageWhereInput! = {}): Int
+  reservations(
+    where: ReservationWhereInput! = {}
+    orderBy: [ReservationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Reservation!]
+  reservation(where: ReservationWhereUniqueInput!): Reservation
+  reservationsCount(where: ReservationWhereInput! = {}): Int
+  reviews(
+    where: ReviewWhereInput! = {}
+    orderBy: [ReviewOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Review!]
+  review(where: ReviewWhereUniqueInput!): Review
+  reviewsCount(where: ReviewWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
@@ -228,6 +820,11 @@ enum KeystoneAdminUIFieldMetaItemViewFieldMode {
   edit
   read
   hidden
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 type KeystoneAdminUISort {

@@ -7,6 +7,7 @@
     "start": "keystone start",
     "build": "keystone build && keystone prisma migrate deploy",
     "prisma": "keystone prisma",
+    "clear": "rm -rf .keystone && rm -rf .next",
     "postinstall": "keystone postinstall"
   },
   "dependencies": {

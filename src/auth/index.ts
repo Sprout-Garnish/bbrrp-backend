@@ -15,6 +15,7 @@ export const { withAuth } = createAuth({
   // when there are no items in the list yet
   initFirstItem: {
     // These fields are collected in the "Create First User" form
-    fields: ["name", "email", "password"],
+    fields: ["name", "email", "password", "phone"],
   },
+  sessionData: "isAdmin",
 });
