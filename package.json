@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "export NODE_ENV=development && export DEBUG=true && keystone dev",
+    "env:dev": "export NODE_ENV=development && export DEBUG=true",
+    "dev": "yarn env:dev && keystone dev",
     "start": "keystone start",
     "build": "keystone build && keystone prisma migrate deploy",
     "prisma": "keystone prisma",
     "clear": "rm -rf .keystone && rm -rf .next",
-    "postinstall": "keystone postinstall"
+    "postinstall": "keystone postinstall",
+    "migrate": "keystone prisma migrate deploy",
+    "deploy": "keystone build && keystone prisma migrate deploy && keystone start"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.1",
