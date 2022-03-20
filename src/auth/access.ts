@@ -1,4 +1,4 @@
-import { userId } from "../utils/hooks";
+import { userId } from "../utils/helpers";
 
 export type Session = {
   itemId: string; // User Id
