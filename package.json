@@ -8,10 +8,10 @@
     "start": "keystone start",
     "build": "keystone build && keystone prisma migrate deploy",
     "prisma": "keystone prisma",
-    "clear": "rm -rf .keystone && rm -rf .next",
+    "clear": "rm -rf .keystone/admin && rm -rf .next",
     "postinstall": "keystone postinstall",
     "migrate": "keystone prisma migrate deploy",
-    "deploy": "keystone build && keystone prisma migrate deploy && keystone start"
+    "migrate:dev": "keystone prisma migrate dev"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.1",
