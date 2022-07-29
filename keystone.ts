@@ -7,7 +7,7 @@ import { db } from "./src/db";
 import { session } from "./src/session";
 import { graphql } from "./src/apollo";
 import { images } from "./src/media";
-import { lists } from "./src/schemas";
+import { lists } from "./src/schema";
 import { server } from "./src/server";
 
 // We wrap our config using the withAuth function. This will inject all

@@ -40,4 +40,5 @@ const Restaurant = list({
     reviews: relationship({ ref: "Review.restaurant", many: true }),
   },
 });
+
 export default Restaurant;
