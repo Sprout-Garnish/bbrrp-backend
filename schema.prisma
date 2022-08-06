@@ -2,8 +2,9 @@
 // Modify your Keystone config when you want to change this.
 
 datasource postgresql {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "postgresql"
 }
 
 generator client {
@@ -52,7 +53,6 @@ model Image {
   image_extension        String?
   image_width            Int?
   image_height           Int?
-  image_mode             String?
   image_id               String?
   from_Restaurant_images Restaurant[] @relation("Restaurant_images")
   from_Review_images     Review[]     @relation("Review_images")

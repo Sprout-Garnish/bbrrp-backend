@@ -367,13 +367,12 @@ type Image {
   image: ImageFieldOutput
 }
 
-interface ImageFieldOutput {
+type ImageFieldOutput {
   id: ID!
   filesize: Int!
   width: Int!
   height: Int!
   extension: ImageExtension!
-  ref: String!
   url: String!
 }
 
@@ -386,26 +385,6 @@ enum ImageExtension {
 
 input ImageWhereUniqueInput {
   id: ID
-}
-
-type LocalImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
-}
-
-type CloudImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
 }
 
 input ImageWhereInput {
@@ -430,8 +409,7 @@ input ImageUpdateInput {
 }
 
 input ImageFieldInput {
-  upload: Upload
-  ref: String
+  upload: Upload!
 }
 
 """
@@ -789,6 +767,7 @@ type KeystoneAdminUIListMeta {
 type KeystoneAdminUIFieldMeta {
   path: String!
   label: String!
+  description: String
   isOrderable: Boolean!
   isFilterable: Boolean!
   fieldMeta: JSON

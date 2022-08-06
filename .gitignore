@@ -16,3 +16,6 @@ package-lock.json
 
 # Public
 public
+
+# Environment variables
+*.env
