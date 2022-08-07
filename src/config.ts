@@ -1,5 +1,17 @@
 import crypto from "crypto";
 
+export const {
+  // The S3 Bucket Name used to store assets
+  S3_BUCKET_NAME: bucketName = "",
+  // The region of the S3 bucket
+  S3_REGION: region = "",
+  // The Access Key ID and Secret that has read/write access to the S3 bucket
+  S3_ACCESS_KEY_ID: accessKeyId = "",
+  S3_SECRET_ACCESS_KEY: secretAccessKey = "",
+  // The base URL to serve assets from
+  ASSET_BASE_URL: baseUrl = "http://localhost:3000",
+} = process.env;
+
 // 3000 is standard for node apps
 // Once deployed, Railway will supply this var to your app
 //@ts-ignore
