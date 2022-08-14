@@ -544,6 +544,7 @@ type Review {
   content: String
   likes: Int
   restaurant: Restaurant
+  rating: Float
 }
 
 input ReviewWhereUniqueInput {
@@ -563,6 +564,7 @@ input ReviewWhereInput {
   content: StringFilter
   likes: IntNullableFilter
   restaurant: RestaurantWhereInput
+  rating: FloatFilter
 }
 
 input DateTimeNullableFilter {
@@ -583,6 +585,7 @@ input ReviewOrderByInput {
   title: OrderDirection
   content: OrderDirection
   likes: OrderDirection
+  rating: OrderDirection
 }
 
 input ReviewUpdateInput {
@@ -594,6 +597,7 @@ input ReviewUpdateInput {
   content: String
   likes: Int
   restaurant: RestaurantRelateToOneForUpdateInput
+  rating: Float
 }
 
 input ReviewUpdateArgs {
@@ -610,6 +614,7 @@ input ReviewCreateInput {
   content: String
   likes: Int
   restaurant: RestaurantRelateToOneForCreateInput
+  rating: Float
 }
 
 """

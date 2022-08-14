@@ -1,0 +1,5 @@
+.git
+*.md
+.keystone
+node_modules
+public

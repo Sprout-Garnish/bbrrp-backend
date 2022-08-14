@@ -84,6 +84,7 @@ model Review {
   likes        Int?        @default(0)
   restaurant   Restaurant? @relation("Review_restaurant", fields: [restaurantId], references: [id])
   restaurantId String?     @map("restaurant")
+  rating       Float
 
   @@index([userId])
   @@index([restaurantId])

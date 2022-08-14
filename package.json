@@ -6,7 +6,7 @@
     "env:dev": "export NODE_ENV=development && export DEBUG=true",
     "dev": "yarn env:dev && keystone dev",
     "start": "keystone start",
-    "build": "keystone build && keystone prisma migrate deploy",
+    "build": "keystone build",
     "prisma": "keystone prisma",
     "clear": "rm -rf .keystone/admin && rm -rf .next",
     "postinstall": "keystone postinstall",

@@ -12,7 +12,7 @@ node_modules
 # Lock files
 *.lock
 yarn.lock
-package-lock.json
+# package-lock.json
 
 # Public
 public
