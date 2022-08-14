@@ -1,6 +1,6 @@
 # Keystone
 .keystone/admin
-keystone.db
+keystone.db*
 .next
 
 # Node modules

@@ -9,17 +9,19 @@
     "build": "keystone build",
     "prisma": "keystone prisma",
     "clear": "rm -rf .keystone/admin && rm -rf .next",
-    "postinstall": "keystone postinstall",
+    "keystone:postinstall": "keystone postinstall --fix",
     "migrate": "keystone prisma migrate deploy",
     "migrate:dev": "keystone prisma migrate dev",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "start:prod": "node ./node_modules/@keystone-6/core/bin/cli.js start"
   },
   "dependencies": {
     "@keystone-6/auth": "^4.0.0",
     "@keystone-6/core": "^2.1.0",
     "@keystone-6/fields-document": "^4.0.0",
     "crypto": "^1.0.1",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "typescript": "^4.7.4"
   },
   "engines": {
     "node": "^14.15 || ^16.13"
@@ -30,7 +32,6 @@
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.7.4"
+    "prettier": "^2.5.1"
   }
 }

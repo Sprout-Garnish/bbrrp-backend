@@ -1,48 +1,20 @@
 version: 0.2
 
-# env:
-#   variables:
-#     NODE_ENV: production
-
 phases:
   install:
+    runtime-versions:
+      nodejs: 16.16.0
+  pre_build:
     commands:
-      - npm i --production --legacy-peer-deps
+      - npm ci --omit=dev
   build:
     commands:
       - npm run build
-      - npm run migrate
-  post_build:
-    commands:
-      - npm run start
-
-# reports:
-#   arn:aws:codebuild:your-region:your-aws-account-id:report-group/report-group-name-1:
-#     files:
-#       - "**/*"
-#     base-directory: 'target/tests/reports'
-#     discard-paths: no
-#   reportGroupCucumberJson:
-#     files:
-#       - 'cucumber/target/cucumber-tests.xml'
-#     discard-paths: yes
-#     file-format: CUCUMBERJSON # default is JUNITXML
+  # post_build:
+  #   commands:
+  #     - npm run migrate
+  #     - npm run start
 artifacts:
   files:
     - '**/*'
   base-directory: '.'
-#   files:
-#     - target/messageUtil-1.0.jar
-#   discard-paths: yes
-#   secondary-artifacts:
-#     artifact1:
-#       files:
-#         - target/artifact-1.0.jar
-#       discard-paths: yes
-#     artifact2:
-#       files:
-#         - target/artifact-2.0.jar
-#       discard-paths: yes
-# cache:
-#   paths:
-#     - '/root/.m2/**/*'
