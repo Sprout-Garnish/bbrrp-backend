@@ -17,7 +17,7 @@ const Image = list({
   fields: {
     name: text({ validation: { isRequired: true, length: { max: 100 } } }),
     description: text({ validation: { length: { max: 1000 } } }),
-    image: image({ storage: "local" }),
+    image: image({ storage: "s3" }),
   },
 });
 

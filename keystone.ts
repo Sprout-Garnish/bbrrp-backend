@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 
-dotenv.config();
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
 
 // Code copied (with some modifications) from the Keystone 6 "with-auth" example
 // See.. https://github.com/keystonejs/keystone/tree/master/examples/with-auth
@@ -25,6 +27,7 @@ export default withAuth(
     graphql,
     storage: {
       local: Storage.local,
+      s3: Storage.s3,
     },
   })
 );

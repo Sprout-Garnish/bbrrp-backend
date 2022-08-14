@@ -1,6 +1,7 @@
 import { list } from "@keystone-6/core";
 import {
   checkbox,
+  float,
   integer,
   relationship,
   text,
@@ -28,6 +29,7 @@ const Review = list({
     content: text({ validation: { isRequired: true, length: { max: 1000 } } }),
     likes: integer({ defaultValue: 0 }),
     restaurant: relationship({ ref: "Restaurant.reviews", many: false }),
+    rating: float({ validation: { isRequired: true } }),
   },
 });
 

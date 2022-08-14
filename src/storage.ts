@@ -28,7 +28,7 @@ export namespace Storage {
     // Files that use this store will be stored in an s3 bucket
     kind: "s3",
     // This store is used for the file field type
-    type: "file",
+    type: "image",
     // The S3 bucket name pulled from the S3_BUCKET_NAME environment variable
     bucketName,
     // The S3 bucket region pulled from the S3_REGION environment variable

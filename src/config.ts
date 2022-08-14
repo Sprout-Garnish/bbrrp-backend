@@ -6,8 +6,8 @@ export const {
   // The region of the S3 bucket
   S3_REGION: region = "",
   // The Access Key ID and Secret that has read/write access to the S3 bucket
-  S3_ACCESS_KEY_ID: accessKeyId = "",
-  S3_SECRET_ACCESS_KEY: secretAccessKey = "",
+  AWS_ACCESS_KEY_ID: accessKeyId = "",
+  AWS_SECRET_ACCESS_KEY: secretAccessKey = "",
   // The base URL to serve assets from
   ASSET_BASE_URL: baseUrl = "http://localhost:3000",
 } = process.env;
