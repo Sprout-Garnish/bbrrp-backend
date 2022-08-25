@@ -11,7 +11,8 @@ phases:
   build:
     commands:
       - npm run build
-      - npm run prisma migrate
+      # - npm run prisma migrate
+      - npx prisma db push
   # post_build:
   #   commands:
   #     - npm run migrate
