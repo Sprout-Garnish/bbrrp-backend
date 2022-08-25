@@ -5,15 +5,14 @@
   "scripts": {
     "env:dev": "export NODE_ENV=development && export DEBUG=true",
     "dev": "yarn env:dev && keystone dev",
-    "start": "./node_modules/@keystone-6/core/bin/cli.js start",
+    "start": "node ./node_modules/@keystone-6/core/bin/cli.js prisma migrate deploy && node ./node_modules/@keystone-6/core/bin/cli.js start",
     "build": "keystone build",
     "prisma": "keystone prisma",
     "clear": "rm -rf .keystone/admin && rm -rf .next",
     "keystone:postinstall": "keystone postinstall --fix",
     "migrate": "keystone prisma migrate deploy",
     "migrate:dev": "keystone prisma migrate dev",
-    "typecheck": "tsc --noEmit",
-    "start:prod": "node ./node_modules/@keystone-6/core/bin/cli.js start"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@keystone-6/auth": "^4.0.0",

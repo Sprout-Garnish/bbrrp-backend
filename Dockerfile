@@ -13,8 +13,8 @@ COPY . .
 RUN npm run keystone:postinstall
 
 # Build the application and migrate the database
+RUN npx prisma generate
 RUN npm run build
-RUN npm run migrate
 
 # Expose the application on port 3000
 # EXPOSE 3000

@@ -14,3 +14,13 @@ Our architecutre:
 
 Utilities:
 - AWS Cost Explorer
+
+Prisma Client:
+Insert followings to `schema.prisma`
+```prisma
+generator client {
+  provider = "prisma-client-js"
+  output   = "node_modules/.prisma/client"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+```
