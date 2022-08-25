@@ -5,7 +5,7 @@
   "scripts": {
     "env:dev": "export NODE_ENV=development && export DEBUG=true",
     "dev": "yarn env:dev && keystone dev",
-    "start": "node ./node_modules/@keystone-6/core/bin/cli.js prisma migrate deploy && ./node_modules/@keystone-6/core/bin/cli.js start",
+    "start": "./node_modules/@keystone-6/core/bin/cli.js start",
     "build": "keystone build",
     "prisma": "keystone prisma",
     "clear": "rm -rf .keystone/admin && rm -rf .next",
