@@ -20,9 +20,9 @@ export const PORT = parseInt(process.env.PORT) || 3000;
 // Postgres DB URL
 // The default value here will work if you've installed Postgres on MacOS using brew
 // One the app is deployed to Railway, this var will be supplied by the Postgres plugin
-export const DATABASE_URL = encodeURIComponent(
-  `postgres://${process.env.RDS_USERNAME}:${process.env.RDS_PASSWORD}@${process.env.RDS_HOSTNAME}:${process.env.RDS_PORT}/bbrrp-backend`
-);
+export const DATABASE_URL =
+  process.env.DATABASE_URL ||
+  `postgres://${process.env.USER}@localhost/keystone-6-example`;
 
 // This is not equivalent to `process.env.NODE_ENV === 'development'`.
 // Rather, it indicates whether the app is running in development mode,
