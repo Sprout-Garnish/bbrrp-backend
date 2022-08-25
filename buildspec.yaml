@@ -11,8 +11,8 @@ phases:
   build:
     commands:
       - npm run build
-      # - npm run prisma migrate
-      - npx prisma db push
+      # - npx prisma db push # This step is needed at initial deploy
+      - npm run prisma migrate # This step is needed after initial deploy (not needed at initial deploy)
   # post_build:
   #   commands:
   #     - npm run migrate
