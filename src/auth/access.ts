@@ -26,3 +26,6 @@ export const isAllowedToModify =
     if (userId(session) !== selector(item)) return false;
     return true;
   };
+
+export const isAllowedToUse = ({ session }: { session: Session }): boolean =>
+  session?.data?.isAdmin ?? false;

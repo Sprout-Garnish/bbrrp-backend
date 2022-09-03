@@ -1,17 +1,13 @@
 import { list } from "@keystone-6/core";
 import { image, text } from "@keystone-6/core/fields";
-import { Session } from "../auth/access";
-
-const isAllowedToUse = ({ session }: { session: Session }): boolean =>
-  session?.data?.isAdmin ?? false;
+import { isAllowedToModify, isSignedIn } from "../auth/access";
 
 const Image = list({
   access: {
-    operation: {
-      query: isAllowedToUse,
-      create: isAllowedToUse,
-      update: isAllowedToUse,
-      delete: isAllowedToUse,
+    item: {
+      create: isSignedIn,
+      update: isAllowedToModify((item) => item.id),
+      delete: isAllowedToModify((item) => item.id),
     },
   },
   fields: {
